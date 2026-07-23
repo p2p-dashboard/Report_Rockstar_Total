@@ -159,12 +159,12 @@
   .tong-col > .pivot-card, .tong-col > .info-card{flex:1; min-height:0;}
   .tong-col > .pivot-card{padding-bottom:2px;}
   .tong-col .pivot-canvas-wrap{flex:1; height:auto; min-height:0;}
-  .filter-split-row{display:flex; gap:14px; flex:1;}
+  .filter-split-row{display:flex; gap:14px; flex:0 0 auto;}
   .filter-split-row > .slicer{flex:1; min-height:0;}
-  .tong-col.col-filters .slicer-tinh{flex:1;}
-  .tong-col.col-filters .slicer-ngay{flex:3;}
+  .tong-col.col-filters .slicer-tinh{flex:0 0 auto;}
+  .tong-col.col-filters .slicer-ngay{flex:0 0 auto;}
   .tong-col.col-filters .slicer-ngay .slicer-body{overflow-y:auto;}
-  .tong-col.col-filters > .info-card{flex:5.5;}
+  .tong-col.col-filters > .info-card{flex:1 1 auto; min-height:0;}
   @media(max-width:1100px){.tong-layout{flex-direction:column;}}
   .slicer-body.cols-2{grid-template-columns:repeat(2,1fr);}
   .slicer-body.cols-4{grid-template-columns:repeat(4,1fr);}

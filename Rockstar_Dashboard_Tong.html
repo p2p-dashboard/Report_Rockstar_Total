@@ -150,6 +150,21 @@
   .slicer-body.grid{display:grid;}
   .slicer-body.grid .slicer-item{text-align:center; border:1px solid #f0f2f6; padding:6px 2px; font-size:11px;}
   .slicer-body.cols-1{grid-template-columns:repeat(1,1fr);}
+
+  .tong-layout{display:flex; align-items:stretch; gap:14px; margin-bottom:16px;}
+  .tong-col{display:flex; flex-direction:column; gap:14px; min-width:0;}
+  .tong-col.col-wide{flex:2;}
+  .tong-col.col-mid{flex:1;}
+  .tong-col.col-filters{flex:1;}
+  .tong-col > .pivot-card, .tong-col > .info-card{flex:1; min-height:0;}
+  .tong-col .pivot-canvas-wrap{flex:1; height:auto; min-height:0;}
+  .filter-split-row{display:flex; gap:14px; flex:1;}
+  .filter-split-row > .slicer{flex:1; min-height:0;}
+  .tong-col.col-filters .slicer-tinh{flex:1;}
+  .tong-col.col-filters .slicer-ngay{flex:3;}
+  .tong-col.col-filters .slicer-ngay .slicer-body{overflow-y:auto;}
+  .tong-col.col-filters > .info-card{flex:5.5;}
+  @media(max-width:1100px){.tong-layout{flex-direction:column;}}
   .slicer-body.cols-2{grid-template-columns:repeat(2,1fr);}
   .slicer-body.cols-4{grid-template-columns:repeat(4,1fr);}
   .slicer-body.cols-6{grid-template-columns:repeat(6,1fr);}
@@ -211,99 +226,102 @@
 
     <div class="dash-kpi-row" id="kpiRow"></div>
 
-    <div class="dash-row row2">
-      <div class="pivot-card">
-        <span class="pivot-fieldbtn">Kênh thực hiện ▾</span>
-        <div class="pivot-title">Total hit by Region</div>
-        <div class="pivot-canvas-wrap"><canvas id="chartHitRegion"></canvas></div>
-        <div class="pivot-axisrow">
-          <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Ca làm việc</span>
-          <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#e91e8c"></span>Tổng hit</span>
+    <div class="tong-layout">
+      <div class="tong-col col-wide">
+        <div class="pivot-card">
+          <span class="pivot-fieldbtn">Kênh thực hiện ▾</span>
+          <div class="pivot-title">Total hit by Region</div>
+          <div class="pivot-canvas-wrap"><canvas id="chartHitRegion"></canvas></div>
+          <div class="pivot-axisrow">
+            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Ca làm việc</span>
+            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#e91e8c"></span>Tổng hit</span>
+          </div>
+        </div>
+
+        <div class="pivot-card">
+          <span class="pivot-fieldbtn">Sum of Tổng ca / bán ▾</span>
+          <div class="pivot-title">Total sale by region</div>
+          <div class="pivot-canvas-wrap"><canvas id="chartSaleRegion"></canvas></div>
+          <div class="pivot-axisrow">
+            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Tổng ca thực hiện</span>
+            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#ffc000"></span>Tổng số bán (Đvt: thùng)</span>
+            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#2e9e4f"></span>Trung bình số bán/ca làm việc</span>
+          </div>
+        </div>
+
+        <div class="pivot-card">
+          <span class="pivot-fieldbtn">Sum of Tổng số bán ▾</span>
+          <div class="pivot-title">Total sale by week</div>
+          <div class="pivot-canvas-wrap"><canvas id="chartWeek"></canvas></div>
         </div>
       </div>
 
-      <div class="pivot-card">
-        <span class="pivot-fieldbtn">Sum of Tổng ca / bán ▾</span>
-        <div class="pivot-title">Total sale by region</div>
-        <div class="pivot-canvas-wrap"><canvas id="chartSaleRegion"></canvas></div>
-        <div class="pivot-axisrow">
-          <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Tổng ca thực hiện</span>
-          <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#ffc000"></span>Tổng số bán (Đvt: thùng)</span>
-          <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#2e9e4f"></span>Trung bình số bán/ca làm việc</span>
+      <div class="tong-col col-mid">
+        <div class="pivot-card">
+          <span class="pivot-fieldbtn">Sum of Tổng số ▾</span>
+          <div class="pivot-title">Total Sale by Channel</div>
+          <div class="pivot-canvas-wrap"><canvas id="chartChannel"></canvas></div>
+          <div class="pivot-axisrow" id="channelLegend"></div>
+        </div>
+
+        <div class="info-card">
+          <h4>Thời gian ghi nhận <span id="periodInline"></span></h4>
+          <div class="stat-row">
+            <div class="stat-icon">🛒</div>
+            <div class="stat-label">Buyer</div>
+            <div class="stat-val" id="buyerVal"></div>
+            <div class="stat-pct" id="buyerPct"></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-icon">🔁</div>
+            <div class="stat-label">Repurchase</div>
+            <div class="stat-val" id="repurchaseVal"></div>
+            <div class="stat-pct" id="repurchasePct"></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-icon">🆕</div>
+            <div class="stat-label">New User</div>
+            <div class="stat-val" id="newuserVal"></div>
+            <div class="stat-pct" id="newuserPct"></div>
+          </div>
+          <div class="dash-note" id="noteBox"></div>
         </div>
       </div>
 
-      <div class="pivot-card">
-        <span class="pivot-fieldbtn">Sum of Tổng số ▾</span>
-        <div class="pivot-title">Total Sale by Channel</div>
-        <div class="pivot-canvas-wrap"><canvas id="chartChannel"></canvas></div>
-        <div class="pivot-axisrow" id="channelLegend"></div>
-      </div>
-
-      <div class="slicer-panel">
-        <div class="slicer slicer-half">
-          <div class="slicer-head">Kênh thực hiện <span class="slicer-clear" data-clear="channel">Xóa lọc</span></div>
-          <div class="slicer-body grid cols-1" id="slicerChannel"></div>
+      <div class="tong-col col-filters">
+        <div class="filter-split-row">
+          <div class="slicer">
+            <div class="slicer-head">Kênh thực hiện <span class="slicer-clear" data-clear="channel">Xóa lọc</span></div>
+            <div class="slicer-body grid cols-1" id="slicerChannel"></div>
+          </div>
+          <div class="slicer">
+            <div class="slicer-head">Khu vực <span class="slicer-clear" data-clear="hub">Xóa lọc</span></div>
+            <div class="slicer-body grid cols-1" id="slicerHub"></div>
+          </div>
         </div>
-        <div class="slicer slicer-half">
-          <div class="slicer-head">Khu vực <span class="slicer-clear" data-clear="hub">Xóa lọc</span></div>
-          <div class="slicer-body grid cols-1" id="slicerHub"></div>
-        </div>
-        <div class="slicer slicer-full">
+        <div class="slicer slicer-tinh">
           <div class="slicer-head">Tỉnh/TP <span class="slicer-clear" data-clear="region">Xóa lọc</span></div>
           <div class="slicer-body grid cols-4" id="slicerRegion"></div>
         </div>
-        <div class="slicer slicer-full">
+        <div class="slicer slicer-ngay">
           <div class="slicer-head">Ngày thực hiện <span class="slicer-clear" data-clear="date">Xóa lọc</span></div>
           <div class="slicer-body grid cols-8" id="slicerDate"></div>
         </div>
-      </div>
-    </div>
-
-    <div class="dash-row row3">
-      <div class="info-card">
-        <h4>Thời gian ghi nhận <span id="periodInline"></span></h4>
-        <div class="stat-row">
-          <div class="stat-icon">🛒</div>
-          <div class="stat-label">Buyer</div>
-          <div class="stat-val" id="buyerVal"></div>
-          <div class="stat-pct" id="buyerPct"></div>
+        <div class="info-card">
+          <h4>Tạp Hóa &amp; Cảng Cá</h4>
+          <table class="stat-table">
+            <tbody>
+              <tr><td>Số lượng điểm làm ở tạp hóa</td><td id="thPoints"></td></tr>
+              <tr><td>Tổng ca làm việc tạp hóa</td><td id="thShifts"></td></tr>
+              <tr><td>Tổng số bán ở tạp hóa</td><td id="thSales"></td></tr>
+              <tr><td>Trung bình số bán/ca ở tạp hóa</td><td class="stat-red" id="thAvg"></td></tr>
+              <tr><td>Số lượng điểm cảng + làng ngư dân gần cảng</td><td id="cangPoints"></td></tr>
+              <tr><td>Tổng ca làm việc cảng</td><td id="cangShifts"></td></tr>
+              <tr><td>Tổng số bán ở cảng</td><td id="cangSales"></td></tr>
+              <tr><td>Trung bình số bán/ca ở tạp hóa</td><td class="stat-red" id="cangAvg"></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="stat-row">
-          <div class="stat-icon">🔁</div>
-          <div class="stat-label">Repurchase</div>
-          <div class="stat-val" id="repurchaseVal"></div>
-          <div class="stat-pct" id="repurchasePct"></div>
-        </div>
-        <div class="stat-row">
-          <div class="stat-icon">🆕</div>
-          <div class="stat-label">New User</div>
-          <div class="stat-val" id="newuserVal"></div>
-          <div class="stat-pct" id="newuserPct"></div>
-        </div>
-        <div class="dash-note" id="noteBox"></div>
-      </div>
-
-      <div class="pivot-card">
-        <span class="pivot-fieldbtn">Sum of Tổng số bán ▾</span>
-        <div class="pivot-title">Total sale by week</div>
-        <div class="pivot-canvas-wrap"><canvas id="chartWeek"></canvas></div>
-      </div>
-
-      <div class="info-card">
-        <h4>Tạp Hóa &amp; Cảng Cá</h4>
-        <table class="stat-table">
-          <tbody>
-            <tr><td>Số lượng điểm làm ở tạp hóa</td><td id="thPoints"></td></tr>
-            <tr><td>Tổng ca làm việc tạp hóa</td><td id="thShifts"></td></tr>
-            <tr><td>Tổng số bán ở tạp hóa</td><td id="thSales"></td></tr>
-            <tr><td>Trung bình số bán/ca ở tạp hóa</td><td class="stat-red" id="thAvg"></td></tr>
-            <tr><td>Số lượng điểm cảng + làng ngư dân gần cảng</td><td id="cangPoints"></td></tr>
-            <tr><td>Tổng ca làm việc cảng</td><td id="cangShifts"></td></tr>
-            <tr><td>Tổng số bán ở cảng</td><td id="cangSales"></td></tr>
-            <tr><td>Trung bình số bán/ca ở tạp hóa</td><td class="stat-red" id="cangAvg"></td></tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </section>

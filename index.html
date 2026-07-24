@@ -547,7 +547,7 @@ document.getElementById('noteBox').textContent = '📌 ' + (kpi.note || '');
 
 // ---------- Recompute KPI banner + Buyer/Repurchase/NewUser + TH/Cảng stats from filtered raw rows ----------
 function computeKpiFromRows(rows){
-  const sum = (key) => rows.reduce((a,r)=>a+(r[key]||0),0);
+  const sum = (key) => rows.reduce((a,r)=>{const v=Number(r[key]);return a+(isNaN(v)?0:v);},0);
   const newUser = sum('kh_moi_biet');
   const repurchase = sum('kh_mua_lan_dau');
   const thRows = rows.filter(r=>r.kenh_thuc_hien==='Tạp Hóa');
@@ -608,7 +608,7 @@ const REGION_ORDER = ['Quảng Ngãi','Quảng Bình','Huế','Đà Nẵng','Kh�
 let rawAll = DATA.raw;
 let allRegions = REGION_ORDER.filter(r=>rawAll.some(x=>x.tinh_tp===r));
 let allChannels = [...new Set(rawAll.map(r=>r.kenh_thuc_hien).filter(Boolean))];
-let allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))].sort((a,b)=>(parseInt((String(a).match(/\d+/)||[0])[0])||0)-(parseInt((String(b).match(/\d+/)||[0])[0])||0));
+let allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))];
 let allDates = [...new Set(rawAll.map(r=>r.ngay_thuc_hien).filter(Boolean))].sort();
 let allHubs = [...new Set(rawAll.map(r=>r.khu_vuc).filter(Boolean))];
 
@@ -1042,7 +1042,7 @@ async function refreshFromSheet(isManual){
     rawAll = fresh;
     allRegions = REGION_ORDER.filter(r=>rawAll.some(x=>x.tinh_tp===r));
     allChannels = [...new Set(rawAll.map(r=>r.kenh_thuc_hien).filter(Boolean))];
-    allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))].sort((a,b)=>(parseInt((String(a).match(/\d+/)||[0])[0])||0)-(parseInt((String(b).match(/\d+/)||[0])[0])||0));
+    allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))];
     allDates = [...new Set(rawAll.map(r=>r.ngay_thuc_hien).filter(Boolean))].sort();
     allHubs = [...new Set(rawAll.map(r=>r.khu_vuc).filter(Boolean))];
 

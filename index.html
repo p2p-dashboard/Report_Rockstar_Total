@@ -608,7 +608,7 @@ const REGION_ORDER = ['Quảng Ngãi','Quảng Bình','Huế','Đà Nẵng','Kh�
 let rawAll = DATA.raw;
 let allRegions = REGION_ORDER.filter(r=>rawAll.some(x=>x.tinh_tp===r));
 let allChannels = [...new Set(rawAll.map(r=>r.kenh_thuc_hien).filter(Boolean))];
-let allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))];
+let allWeeks = [...new Set(rawAll.map(r=>r.tuan_thuc_hien).filter(Boolean))].sort((a,b)=>(parseInt((String(a).match(/\d+/)||[0])[0])||0)-(parseInt((String(b).match(/\d+/)||[0])[0])||0));
 let allDates = [...new Set(rawAll.map(r=>r.ngay_thuc_hien).filter(Boolean))].sort();
 let allHubs = [...new Set(rawAll.map(r=>r.khu_vuc).filter(Boolean))];
 

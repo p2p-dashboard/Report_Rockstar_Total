@@ -153,19 +153,27 @@
 
   .tong-layout{display:flex; align-items:stretch; gap:14px; margin-bottom:16px; min-height:840px;}
   .tong-col{display:flex; flex-direction:column; gap:14px; min-width:0;}
-  .tong-col.col-wide{flex:2;}
-  .tong-col.col-mid{flex:1;}
+  .tong-col.col-main{flex:3;}
   .tong-col.col-filters{flex:1;}
   .tong-col > .pivot-card, .tong-col > .info-card{flex:1; min-height:0;}
   .tong-col > .pivot-card{padding-bottom:2px;}
   .tong-col .pivot-canvas-wrap{flex:1; height:auto; min-height:0;}
+  .dash-subrow{display:flex; gap:14px; flex:1; min-height:0;}
+  .dash-subrow > .pivot-card, .dash-subrow > .info-card{flex:1; min-height:0; margin:0;}
+  .dash-subrow > .pivot-card{padding-bottom:2px;}
+  .dash-subrow .pivot-canvas-wrap{flex:1; height:auto; min-height:0;}
+  .pivot-card.featured{flex:1.7; border:2px solid #e63946; box-shadow:0 2px 10px rgba(230,57,70,.18);}
+  .featured-badge{
+    display:inline-block; align-self:center; background:#e63946; color:#fff; font-size:11px; font-weight:700;
+    padding:3px 12px; border-radius:12px; margin-bottom:4px; letter-spacing:.3px;
+  }
   .filter-split-row{display:flex; gap:14px; flex:0 0 auto;}
   .filter-split-row > .slicer{flex:1; min-height:0;}
   .tong-col.col-filters .slicer-tinh{flex:0 0 auto;}
   .tong-col.col-filters .slicer-ngay{flex:0 0 auto;}
   .tong-col.col-filters .slicer-ngay .slicer-body{overflow-y:auto;}
   .tong-col.col-filters > .info-card{flex:1 1 auto; min-height:0;}
-  @media(max-width:1100px){.tong-layout{flex-direction:column;}}
+  @media(max-width:1100px){.tong-layout{flex-direction:column;} .dash-subrow{flex-direction:column;}}
   .slicer-body.cols-2{grid-template-columns:repeat(2,1fr);}
   .slicer-body.cols-4{grid-template-columns:repeat(4,1fr);}
   .slicer-body.cols-6{grid-template-columns:repeat(6,1fr);}
@@ -227,18 +235,9 @@
     <div class="dash-kpi-row" id="kpiRow"></div>
 
     <div class="tong-layout">
-      <div class="tong-col col-wide">
-        <div class="pivot-card">
-          <span class="pivot-fieldbtn">Kênh thực hiện ▾</span>
-          <div class="pivot-title">Total hit by Region</div>
-          <div class="pivot-canvas-wrap"><canvas id="chartHitRegion"></canvas></div>
-          <div class="pivot-axisrow">
-            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Ca làm việc</span>
-            <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#e91e8c"></span>Tổng hit</span>
-          </div>
-        </div>
-
-        <div class="pivot-card">
+      <div class="tong-col col-main">
+        <div class="pivot-card featured">
+          <span class="featured-badge">⭐ Chỉ số quan trọng nhất</span>
           <span class="pivot-fieldbtn">Sum of Tổng ca / bán ▾</span>
           <div class="pivot-title">Total sale by region</div>
           <div class="pivot-canvas-wrap"><canvas id="chartSaleRegion"></canvas></div>
@@ -249,40 +248,52 @@
           </div>
         </div>
 
-        <div class="pivot-card">
-          <span class="pivot-fieldbtn">Sum of Tổng số bán ▾</span>
-          <div class="pivot-title">Total sale by week</div>
-          <div class="pivot-canvas-wrap"><canvas id="chartWeek"></canvas></div>
-        </div>
-      </div>
-
-      <div class="tong-col col-mid">
-        <div class="pivot-card">
-          <span class="pivot-fieldbtn">Sum of Tổng số ▾</span>
-          <div class="pivot-title">Total Sale by Channel</div>
-          <div class="pivot-canvas-wrap"><canvas id="chartChannel"></canvas></div>
-          <div class="pivot-axisrow" id="channelLegend"></div>
-        </div>
-
-        <div class="info-card">
-          <h4>Thời gian ghi nhận <span id="periodInline"></span></h4>
-          <div class="stat-row">
-            <div class="stat-icon">🛒</div>
-            <div class="stat-label">Buyer</div>
-            <div class="stat-val" id="buyerVal"></div>
-            <div class="stat-pct" id="buyerPct"></div>
+        <div class="dash-subrow">
+          <div class="pivot-card">
+            <span class="pivot-fieldbtn">Kênh thực hiện ▾</span>
+            <div class="pivot-title">Total hit by Region</div>
+            <div class="pivot-canvas-wrap"><canvas id="chartHitRegion"></canvas></div>
+            <div class="pivot-axisrow">
+              <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#4472c4"></span>Ca làm việc</span>
+              <span class="pivot-fieldbtn"><span class="legend-dot" style="background:#e91e8c"></span>Tổng hit</span>
+            </div>
           </div>
-          <div class="stat-row">
-            <div class="stat-icon">🔁</div>
-            <div class="stat-label">Repurchase</div>
-            <div class="stat-val" id="repurchaseVal"></div>
-            <div class="stat-pct" id="repurchasePct"></div>
+
+          <div class="pivot-card">
+            <span class="pivot-fieldbtn">Sum of Tổng số ▾</span>
+            <div class="pivot-title">Total Sale by Channel</div>
+            <div class="pivot-canvas-wrap"><canvas id="chartChannel"></canvas></div>
+            <div class="pivot-axisrow" id="channelLegend"></div>
           </div>
-          <div class="stat-row">
-            <div class="stat-icon">🆕</div>
-            <div class="stat-label">New User</div>
-            <div class="stat-val" id="newuserVal"></div>
-            <div class="stat-pct" id="newuserPct"></div>
+        </div>
+
+        <div class="dash-subrow">
+          <div class="pivot-card">
+            <span class="pivot-fieldbtn">Sum of Tổng số bán ▾</span>
+            <div class="pivot-title">Total sale by week</div>
+            <div class="pivot-canvas-wrap"><canvas id="chartWeek"></canvas></div>
+          </div>
+
+          <div class="info-card">
+            <h4>Thời gian ghi nhận <span id="periodInline"></span></h4>
+            <div class="stat-row">
+              <div class="stat-icon">🛒</div>
+              <div class="stat-label">Buyer</div>
+              <div class="stat-val" id="buyerVal"></div>
+              <div class="stat-pct" id="buyerPct"></div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-icon">🔁</div>
+              <div class="stat-label">Repurchase</div>
+              <div class="stat-val" id="repurchaseVal"></div>
+              <div class="stat-pct" id="repurchasePct"></div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-icon">🆕</div>
+              <div class="stat-label">New User</div>
+              <div class="stat-val" id="newuserVal"></div>
+              <div class="stat-pct" id="newuserPct"></div>
+            </div>
           </div>
         </div>
       </div>

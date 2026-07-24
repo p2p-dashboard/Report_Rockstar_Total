@@ -285,7 +285,6 @@
             <div class="stat-val" id="newuserVal"></div>
             <div class="stat-pct" id="newuserPct"></div>
           </div>
-          <div class="dash-note" id="noteBox"></div>
         </div>
       </div>
 
@@ -543,7 +542,6 @@ kpiRow.innerHTML = `
 `;
 
 document.getElementById('buyerPct').textContent = '100%';
-document.getElementById('noteBox').textContent = '📌 ' + (kpi.note || '');
 
 // ---------- Recompute KPI banner + Buyer/Repurchase/NewUser + TH/Cảng stats from filtered raw rows ----------
 function computeKpiFromRows(rows){
